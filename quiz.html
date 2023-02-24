@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+<body>
+    <form id="content">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        class Answer{
+            constructor(content, value){
+                this.content = content;
+                this.value = value;
+            }
+        }
+
+        class Question{
+            constructor(value, questions){
+                this.value = value;
+                this.questions = questions;
+            }
+        }
+
+        var quizArr = [
+            new Question("Which of the following browser supports HTML5 in its latest version?", [new Answer("Apple", false), new Answer("Both", true), new Answer("Google", false), new Answer("Neither", false)]),
+            new Question("Which of the following tag represents a piece of content that is only slightly related to the rest of the page in HTML5?", [new Answer("Aside", true), new Answer("Section", false), new Answer("P", false), new Answer("Neither", false)]),
+            new Question("Which of the following input control is used for input fields that should contain an e-mail address in Web Form 2.0?", [new Answer("url", false), new Answer("number", false), new Answer("email", true), new Answer("address", false)]),
+            new Question("Which of the following tag insists to have a value in an input control in HTML5?", [new Answer("data-required", false), new Answer("occupied", false), new Answer("Needed", false), new Answer("Required", true)]),
+            new Question("Which of the following attribute triggers event when the browser starts to load the media data?", [new Answer("onloadstart", true), new Answer("onLoadStart", false), new Answer("onloadmetadata", false), new Answer("onLoadMetadata", false)])
+        ]
+
+        var content = document.getElementById('content');
+
+        quizArr.forEach(function(Question){
+            var newQuestion = document.createElement('div');
+            var questionContent = Question.value;
+            Question.questions.forEach(function(Answer){
+                questionContent += `
+                    <div><input type="radio" name="${Question.value}" id="${Answer.value}"> ${Answer.content}</div>
+
+                `
+            });
+            newQuestion.innerHTML = questionContent;
+            content.insertBefore(newQuestion, document.getElementsByTagName("button")[0]);
+        });
+
+        content.onsubmit = function(){
+            var finalscore = 0;
+            var subArr = document.querySelectorAll('input');
+            subArr.forEach(function(HTMLInputElement){
+                if(HTMLInputElement.checked && HTMLInputElement.id == "true"){
+                    finalscore++;
+                }
+            })
+            window.alert("Your score was: " + finalscore);
+        }
+    </script>
+</body>
+</html>

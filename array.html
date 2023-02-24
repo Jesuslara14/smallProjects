@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+    <style>
+        img{
+            width: 100%;
+        }
+
+        h3{
+            text-align: center;
+        }
+
+        .styled{
+            background-color: lightblue;
+            border-radius: 5px;
+            text-align: center;
+            color: black;
+        }
+        
+        .flex{
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+
+        .item{
+            height: 500px;
+            width: 25%;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="styled">SHOP</h1>
+    <div id="shop" class="flex">
+        
+    </div>
+    <script>
+        class shopItem{
+            constructor(image, name, data){
+                this.data = data;
+                this.image = image;
+                this.name = name;
+            }
+        }
+
+        var itemArr = [new shopItem("zote.png", "Soap", "soap"), new shopItem("soup.png", "Soup", "soup"), new shopItem("cupcake.png", "Cupcake", "cupcake")];
+
+        itemArr.unshift(new shopItem("blackshoe.png", "An black shoe", "shoe"))
+
+        for(var i = 0; i < itemArr.length; i++){
+           formElement(itemArr[i]);
+        }
+
+        function formElement(item){
+            var newElement = `
+            <div class="item styled">
+                <img src="${item.image}">
+                <h3>${item.data}</h3>
+                <button class="add" data-item="${item.data}">Add to cart</button>
+                <button class="del" data-item="${item.data}">Remove from cart</button>
+            </div>
+            `
+            document.getElementById("shop").innerHTML += newElement;
+        }
+
+        var shoppingCart = [];
+
+        document.getElementById("shop").addEventListener("click", function(event){
+            if(event.target.className == "add"){
+                shoppingCart.push(event.target.dataset.item);
+                console.log(shoppingCart);
+            }
+
+            if(event.target.className == "del"){
+                shoppingCart.splice(shoppingCart.indexOf(event.target.dataset.item), 1);
+                console.log(shoppingCart);
+            }
+        });
+
+    </script>
+</body>
+</html>
